@@ -1,14 +1,15 @@
 #include <stdio.h>
 #include "myADC.h"
 #include "driver/gpio.h"
+#include "driver/adc.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
-#define LED1 38 // GROEN
-#define LED2 37 // ROOD
-#define LED3 36 // BLAUW
+#define LED1 2 // GROEN
+#define LED2 15 // ROOD
+#define LED3 13 // GEEL
 
-#define CHANNEL ADC_CHANNEL_4
+#define CHANNEL ADC_CHANNEL_0
 #define TEMP_OFFSET_C -1.0f ///verwijderen misschien
 
 static void leds_init(void)
@@ -29,23 +30,23 @@ static void leds_init(void)
 
 static void zet_kleur(float temperatuur_c)
 {
-    if (temperatuur_c > 19.0f)
+    if (temperatuur_c > 22.0f)
     {
-        // Boven 19°C -> ROOD (LED2)
+        // Boven 22°C -> ROOD (LED2)
         gpio_set_level(LED1, 0);
         gpio_set_level(LED2, 1);
         gpio_set_level(LED3, 0);
     }
-    else if (temperatuur_c >= 18.0f)
+    else if (temperatuur_c >= 20.0f)
     {
-        // Tussen 18°C en 19°C -> GROEN (LED1)
+        // Tussen 20°C en 22°C -> GROEN (LED1)
         gpio_set_level(LED1, 1);
         gpio_set_level(LED2, 0);
         gpio_set_level(LED3, 0);
     }
     else
     {
-        // Onder 18°C -> BLAUW (LED3)
+        // Onder 20°C -> GEEL (LED3)
         gpio_set_level(LED1, 0);
         gpio_set_level(LED2, 0);
         gpio_set_level(LED3, 1);
@@ -60,7 +61,7 @@ void app_main(void)
 
     while (1)
     {
-        int spanning_mv = myADC_getMiliVolt(CHANNEL);
+        int spanning_mv = myADC_getMillivolt(CHANNEL);
 
         if (spanning_mv < 0 || spanning_mv > 1100)
         {
@@ -89,7 +90,7 @@ void app_main(void)
 
         printf("Spanning: %d mV | Temp raw: %.1f C | Temp gecorrigeerd: %.1f C\n", spanning_mv, temperatuur_raw_c, temperatuur_c);
 
-        vTaskDelay(pdMS_TO_TICKS(1000));
+        vTaskDelay(pdMS_TO_TICKS(3000));
 
     }
 

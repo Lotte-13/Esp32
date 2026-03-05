@@ -21,9 +21,13 @@ void myADC_setup(int channel)
     adc_oneshot_new_unit(&adc_config, &adc1_handle);
     adc_oneshot_config_channel(adc1_handle, channel, &default_channel_config);
 
-    #if ADC_CALIBRATION
-        adc_cali_create_scheme_line_fitting(&cali_config, &calibratie_curve_adc1);
-    #endif 
+    // ADC Kalibratie instellingen
+    adc_cali_line_fitting_config_t cali_config = {
+        .unit_id = ADC_UNIT_1,
+        .atten = ADC_ATTEN_DB_12,
+        .bitwidth = ADC_BITWIDTH_DEFAULT,
+    };
+    adc_cali_create_scheme_line_fitting(&cali_config, &calibratie_curve_adc1);
 }
 
 int myADC_inlezen(int channel)
