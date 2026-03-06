@@ -29,6 +29,7 @@ void app_main(void)
     ledc_channel_config(&mychannel);
 
     //esp_err_t ledc_set_duty(ledc_mode_t speed_mode, ledc_channel_t channel, uint32_t duty)
-    //esp_err_t ledc_update_duty(ledc_mode_t speed_mode, ledc_channel_t channel)
+    //esp_err_t ledc_update_duty(ledc_mode_t speed_mode, ledc_channel_t channel)
 
+    
 }
