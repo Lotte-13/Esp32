@@ -1,35 +1,34 @@
 #include <stdio.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "driver/gpio.h"
 #include "driver/ledc.h"
+#include "driver/adc.h"
+#include "esp_adc_cal.h"
+#include "myPWM.h"
 
-ledc_timer_config_t myconfig =
-{
-    .timer_num = LEDC_TIMER_0,
-    .speed_mode = LEDC_LOW_SPEED_MODE,
-    .duty_resolution = LEDC_TIMER_13_BIT,
-    .freq_hz = 50,
-    .clk_cfg = LEDC_AUTO_CLK,
-};
-
-ledc_channel_config_t mychannel =
-{
-    .speed_mode = LEDC_LOW_SPEED_MODE,
-    .channel = LEDC_CHANNEL_0,
-    .timer_sel = LEDC_TIMER_0,
-    .intr_type = LEDC_INTR_DISABLE,
-    .gpio_num = 25,
-    .duty = 0,
-    .hpoint = 0,
-};
+#define CHANNEL ADC_CHANNEL_0
 
 void app_main(void)
 {
-    //setup
-
-    ledc_timer_config(&myconfig);
-    ledc_channel_config(&mychannel);
-
-    //esp_err_t ledc_set_duty(ledc_mode_t speed_mode, ledc_channel_t channel, uint32_t duty)
-    //esp_err_t ledc_update_duty(ledc_mode_t speed_mode, ledc_channel_t channel)
-
+    myPWM_Initialize(18);
     
+    //adc setting 
+    int potWaarde = 0;
+    static esp_adc_cal_characteristics_t *adc_chars;
+    adc1_config_width(ADC_WIDTH_BIT_12);
+    adc1_config_channel_atten(CHANNEL, ADC_ATTEN_DB_12);
+    adc_chars = calloc(1, sizeof(esp_adc_cal_characteristics_t));
+    esp_adc_cal_characterize(ADC_UNIT_1, ADC_ATTEN_DB_12, ADC_WIDTH_BIT_12, 1100, adc_chars);
+
+    while(1)
+    {
+        //Potmeter inlezen
+        potWaarde = esp_adc_cal_raw_to_voltage(adc1_get_raw((adc1_channel_t)CHANNEL), adc_chars);
+        printf("Potentiometer waarde: %d mV\n", potWaarde);
+        vTaskDelay(100);
+
+        myPWM_SetDuty(potWaarde / 4); // Schaal de potentiometerwaarde naar een bereik van 0-255
+    }
+
 }
