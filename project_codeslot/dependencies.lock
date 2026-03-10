@@ -19,9 +19,18 @@ dependencies:
       path: components/myGPIO
       type: git
     version: 751e0b19e37d47a4c4e2a0c9d528dd3af1f128b6
+  myPWM:
+    component_hash: 4b0aa239c7599c6db5e2a3e4a6b473dc8c0205662cb6a4e61f66710279111342
+    dependencies: []
+    source:
+      git: git@github.com:KNaelaerts/ESP32_Periferie.git
+      path: components/myPWM
+      type: git
+    version: 751e0b19e37d47a4c4e2a0c9d528dd3af1f128b6
 direct_dependencies:
 - myADC
 - myGPIO
-manifest_hash: a8bc021cdcc95420edc90ee2f153f09baab110c7b036eb87f9b605c5e27447df
+- myPWM
+manifest_hash: 0aab35fcf264553efa59d26ddbdb3339359c3ef750a0deb82f70cf8aee0486ae
 target: esp32
 version: 2.0.0
