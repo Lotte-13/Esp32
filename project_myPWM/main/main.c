@@ -1,11 +1,12 @@
 #include <stdio.h>
+#include "myPWM.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "driver/gpio.h"
 #include "driver/ledc.h"
 #include "driver/adc.h"
 #include "esp_adc_cal.h"
-#include "components/myPWM.h"
+
 
 #define CHANNEL ADC_CHANNEL_0
 
@@ -27,7 +28,13 @@ void app_main(void)
         potWaarde = esp_adc_cal_raw_to_voltage(adc1_get_raw((adc1_channel_t)CHANNEL), adc_chars);
         printf("Potentiometer waarde: %d mV\n", potWaarde);
 
-        myPWM_SetDuty(potWaarde / 4); // Schaal de potentiometerwaarde naar een bereik van 0-255
+        // Schaal de potentiometerwaarde naar een bereik van 0-255
+        int duty = (potWaarde * 255) / 3300;
+        if (duty > 255) duty = 255; // Ensure it doesn't exceed 255
+        myPWM_SetDuty(duty);
+
+        // Add delay to prevent hogging CPU and flooding output
+        vTaskDelay(pdMS_TO_TICKS(100));
     }
 
 }
