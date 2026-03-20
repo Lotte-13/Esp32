@@ -3,3 +3,7 @@ dependencies:
   myGPIO:
     path: components/myGPIO
     git: git@github.com:KNaelaerts/ESP32_Periferie.git
+
+  myGPTimer:
+    path: components/myGPTimer
+    git: git@github.com:KNaelaerts/ESP32_Periferie.git

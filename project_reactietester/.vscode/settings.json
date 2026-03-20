@@ -12,6 +12,6 @@
   "clangd.arguments": [
     "--background-index",
     "--query-driver=**",
-    "--compile-commands-dir=c:\\Users\\lotte\\project_reactie\\build"
+    "--compile-commands-dir=c:\\microcontrolers\\project_reactietester\\build"
   ]
 }
