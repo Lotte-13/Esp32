@@ -5,36 +5,43 @@
 #include "esp_random.h"
 #include "myGPIO.h"
 
+int counter = 0;
+
 void app_main(void)
 {
     int random = esp_random()%100 + 1; 
 
-    bool guessed_correctly = false;
+    bool juist_geraden = false;
 
-    while (guessed_correctly == false)
+    while (juist_geraden == false)
     {
-        printf("Guess the random number:\n");
-        int guess = 0;
-        while (guess == 0)
+        printf("Raad het getal:\n");
+        int gok = 0;
+
+        while (gok == 0)
         {
-            scanf("%d", &guess);
+            scanf("%d", &gok);
             vTaskDelay(1000 / portTICK_PERIOD_MS);
         }
-        printf("You guessed: %d\n", guess);
-        if (guess == random)
+        printf("gok: %d\n", gok);
+        if (gok == random)
         {
-            printf("Correct! You guessed the number.\n");
-            guessed_correctly = true;
+            counter++;
+            printf("je hebt het getal geraden in %d pogingen\n", counter);
+            juist_geraden = true;
+            counter = 0;
         }
-        else if (guess < random)
+        else if (gok < random)
         {
-            printf("Too low! Try again.\n");
-            guess = 0;
+            printf("getal is hoger\n");
+            gok = 0;
+            counter++;
         }
         else
         {
-            printf("Too high! Try again.\n");
-            guess = 0;
+            printf("getal is lager\n");
+            gok = 0;
+            counter++;
         }
 
     }
