@@ -1,0 +1,27 @@
+dependencies:
+  idf:
+    source:
+      type: idf
+    version: 5.5.2
+  myGPIO:
+    component_hash: 6e9caf0ea609a17e939511db326c103bd5febeaca93f33458b9d9cced5b11d4b
+    dependencies: []
+    source:
+      git: git@github.com:KNaelaerts/ESP32_Periferie.git
+      path: components/myGPIO
+      type: git
+    version: 9b239e92aa3fc689a42de9194b8dc99ef460f93f
+  myGPTimer:
+    component_hash: a35b0f948991212bcce2ce34c60e0b4767774e9cb89b16d2ce9a7f8be5a5ede0
+    dependencies: []
+    source:
+      git: git@github.com:KNaelaerts/ESP32_Periferie.git
+      path: components/myGPTimer
+      type: git
+    version: 9b239e92aa3fc689a42de9194b8dc99ef460f93f
+direct_dependencies:
+- myGPIO
+- myGPTimer
+manifest_hash: 43982c331870f08754aadccb2c5b0a86171f1de0ea5a46cd9d8c0f8f5f708be8
+target: esp32
+version: 2.0.0
