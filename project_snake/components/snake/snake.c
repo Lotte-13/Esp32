@@ -19,9 +19,9 @@
 #define GRID_H     (LCD_HEIGHT / CELL_SIZE)
 #define MAX_SNAKE  (GRID_W * GRID_H)
 
-#define COLOR_BG     0xFFFF
-#define COLOR_SNAKE  0x0000
-#define COLOR_FOOD   0x00F8
+#define COLOR_BG     0xFFFF //wit
+#define COLOR_SNAKE  0xE007 //groen
+#define COLOR_FOOD   0x00F8 //rood
 
 typedef struct { int x, y; } Point;
 typedef enum { DIR_UP, DIR_DOWN, DIR_LEFT, DIR_RIGHT } Direction;
