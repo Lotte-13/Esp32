@@ -79,7 +79,7 @@ void app_main(void) {
     esp_lcd_panel_set_gap(panel, 52, 40);
     esp_lcd_panel_disp_on_off(panel, true);
 
-    // Game loop
+    // Game
     snake_game(panel);
     draw_game_over(panel, 0);
 
